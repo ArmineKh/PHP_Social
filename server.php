@@ -9,6 +9,8 @@ class Ajax{
 				$this->signup();
 			}  else if ($_POST["action"] == "ajax2") {
 				$this->search();
+			} else if ($_POST["action"] == "ajax3") {
+				$this->addFriend();
 			}
 		}
 		if (isset($_POST["loginbtn"])){
@@ -125,6 +127,14 @@ $_SESSION["user"] = $data[0];
 		$search = $_POST['search'];
 		$data = $this->db->query("SELECT * FROM user WHERE name LIKE '$search%'")->fetch_all(true);
 		print json_encode($data);
+	}
+
+	function addFriend(){
+		$user_id = $_POST['id'];
+		$my_id = $_SESSION['user']['id'];
+		$this->db->query("INSERT INTO request (user_id, my_id) VALUES($user_id, $my_id)");
+
+
 	}
 }
 $a = new Ajax();

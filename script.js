@@ -31,33 +31,47 @@ $("#save").click(function(event) {
 });
 
 $(document).on("input", "#search", function(){
-let search = $("#search").val();
-$("#search_result").empty()
-if (search) {
-  
-$.ajax({
-  url: 'server.php',
-  type: 'POST',
-  data: {action: 'ajax2', search: search},
-  success: function(r){
-r = JSON.parse(r);
-console.log(r);
-r.forEach( function(item) {
-  let n = $(`<div class="user_item p-3 bg-dark text-light" style = "width:300px">
-    <h6>
-    <img src="${item['photo']}" width = "50" height = "50" style = 'border-radius:50%'>
-    ${item['name']} ${item['surname']}
-    <button class="btn btn-sm btn-success float-right mt-2" data-id="${item.id}">Add</button>
-    </h6></div>`);
-  $("#search_result").append(n);
- 
+  let search = $("#search").val();
+  $("#search_result").empty()
+  if (search) {
 
-});
+    $.ajax({
+      url: 'server.php',
+      type: 'POST',
+      data: {action: 'ajax2', search: search},
+      success: function(r){
+        r = JSON.parse(r);
+        console.log(r);
+        r.forEach( function(item) {
+          let n = $(`<div class="user_item p-3 bg-dark text-light" style = "width:300px">
+            <h6>
+            <img src="${item['photo']}" width = "50" height = "50" style = 'border-radius:50%'>
+            ${item['name']} ${item['surname']}
+            <button class="btn btn-sm btn-success float-right mt-2" data-id="${item.id}">Add Friend</button>
+            </h6></div>`);
+          $("#search_result").append(n);
 
+
+        });
+
+      }
+    });
   }
 });
-}
+
+
+
+$(document).on('click','.add', function(){
+ let id = $(this).data('id');
+ console.log(id)
+ $.ajax({
+   url: 'server.php',
+   type: 'POST',
+   data: {action: 'ajax3', id : id},
+   success: function(r){
+     console.log(r);
+   }
+ });
 });
 
 
- 
