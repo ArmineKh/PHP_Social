@@ -10,7 +10,14 @@ class Ajax{
 			}  else if ($_POST["action"] == "ajax2") {
 				$this->search();
 			} else if ($_POST["action"] == "ajax3") {
+				$this->addFriendRequest();
+			}
+			else if ($_POST["action"] == "getRequest") {
+				$this->getRequest();
+			} else if($_POST['action'] == "addFriend"){
 				$this->addFriend();
+			} else if($_POST['action'] == "deleteRequest"){
+				$this->deleteRequest();
 			}
 		}
 		if (isset($_POST["loginbtn"])){
@@ -129,12 +136,34 @@ $_SESSION["user"] = $data[0];
 		print json_encode($data);
 	}
 
-	function addFriend(){
+	function addFriendRequest(){
 		$user_id = $_POST['id'];
 		$my_id = $_SESSION['user']['id'];
 		$this->db->query("INSERT INTO request (user_id, my_id) VALUES($user_id, $my_id)");
 
 
+	}
+
+	function getRequest(){
+		$my_id = $_SESSION['user']['id'];
+		$data = $this->db->query("SELECT * FROM request 
+								JOIN user on user.id = request.my_id 
+								Where user_id = $my_id")->fetch_all(true);
+		print json_encode($data);
+	}
+
+	function addFriend(){
+		$friend_id = $_POST['friend_id'];
+		$my_id = $_SESSION['user']['id'];
+		$this->db->query("INSERT INTO friends(my_id, friend_id)  VALUES($my_id, $friend_id)");
+		$this->db->query("DELETE FROM request WHERE user_id = $my_id  AND my_id = $friend_id");
+
+	}
+
+	function deleteRequest(){
+		$friend_id = $_POST['friend_id'];
+		$my_id = $_SESSION['user']['id'];
+		$this->db->query("DELETE FROM request WHERE user_id = $my_id  AND my_id = $friend_id");
 	}
 }
 $a = new Ajax();

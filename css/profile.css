@@ -1,0 +1,12 @@
+.notific_block{
+	position: relative;
+}
+#request_result{
+	position: absolute;
+	left: -100px;
+	display: none;
+}
+
+.notific_icon{
+	width: 50px;
+}

@@ -44,5 +44,5 @@ if (isset($_SESSION["error"])) {
 <?php 	
 session_destroy();
  ?>
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </html>
