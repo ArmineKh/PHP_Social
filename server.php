@@ -3,7 +3,7 @@ class Ajax{
 	private  $db;
 	function __construct(){
 		session_start();
-		$this->db = new mysqli("localhost", "root", "", "db2");
+		$this->db = new mysqli("localhost", "root", "", "db");
 		if (isset($_POST["action"])){
 			if($_POST["action"] == "ajax1"){
 				$this->signup();
@@ -18,6 +18,10 @@ class Ajax{
 				$this->addFriend();
 			} else if($_POST['action'] == "deleteRequest"){
 				$this->deleteRequest();
+			} else if($_POST['action'] == "showFriends"){
+				$this->showFrinds();
+			} else if($_POST['action'] == "selectFriend"){
+				$this->selectFriend();
 			}
 		}
 		if (isset($_POST["loginbtn"])){
@@ -164,6 +168,21 @@ $_SESSION["user"] = $data[0];
 		$friend_id = $_POST['friend_id'];
 		$my_id = $_SESSION['user']['id'];
 		$this->db->query("DELETE FROM request WHERE user_id = $my_id  AND my_id = $friend_id");
+	}
+
+	function showFrinds(){
+		$my_id = $_SESSION['user']['id'];
+		$data = $this->db->query("SELECT * FROM friends 
+								JOIN user on user.id = friends.my_id 
+								Where my_id = $my_id")->fetch_all(true);
+		print json_encode($data);
+	}
+
+	function selectFriend(){
+		$friend_id = $_POST['friend_id'];
+		$data = $this->db->query("SELECT * FROM friends 
+								WHERE friend_id = $friend_id")->fetch_all(true);
+		print json_encode($data);
 	}
 }
 $a = new Ajax();

@@ -83,6 +83,10 @@ $(".notific_icon").click(function(event) {
   $("#request_result").slideToggle('slow');
 });
 
+$(".friend_icon").click(function(event) {
+  $("#friend_list").slideToggle('slow');
+});
+
 $(".profpic").change(function(event) {
   $(".myform").submit();
 });
@@ -120,4 +124,53 @@ $.ajax({
 
 
 /***************** END DELETE REQUEST **************************/
+
+
+
+/***************** SHOW FRIENS **************************/
+
+function showFrinds(){
+  $.ajax({
+   url: 'server.php',
+   type: 'POST',
+   data: {action: 'showFrinds'},
+   success: function(r){
+     console.log(r);
+     r = JSON.parse(r);
+      r.forEach( function(item) {
+          let n = $(`<div class=" p-3 bg-dark text-light friend" data-id="${item.id} style = "width:500px">
+            <img src="${item['photo']}" width = "50" height = "50" style = 'border-radius:50%'>
+            ${item['name']} ${item['surname']}
+           </div>`);
+          $("#friend_list").append(n);
+        });
+   }
+ });
+}
+showFrinds();
+
+/***************** END show Friends **************************/
+
+
+/***************** SELECT Friends **************************/
+$(document).on("click",".friend", function(){
+ let friend_id = $(this).attr('data-id');
+$.ajax({
+  url: 'server.php',
+   type: 'POST',
+   data: {action: 'selectFriend', friend_id : friend_id},
+   success: function(r){
+     console.log(r);
+     r = JSON.parse(r);
+      r.forEach( function(item) {
+          let n = $(`<div></div>`)
+
+          });
+   }
+});
+
+
+/***************** END SELECT Friends **************************/
+
+
 
