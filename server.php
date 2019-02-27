@@ -3,7 +3,7 @@ class Ajax{
 	private  $db;
 	function __construct(){
 		session_start();
-		$this->db = new mysqli("localhost", "root", "", "db");
+		$this->db = new mysqli("localhost", "root", "", "db2");
 		if (isset($_POST["action"])){
 			if($_POST["action"] == "ajax1"){
 				$this->signup();
@@ -18,10 +18,12 @@ class Ajax{
 				$this->addFriend();
 			} else if($_POST['action'] == "deleteRequest"){
 				$this->deleteRequest();
-			} else if($_POST['action'] == "showFriends"){
+			} else if($_POST['action'] == "showFrinds"){
 				$this->showFrinds();
 			} else if($_POST['action'] == "selectFriend"){
 				$this->selectFriend();
+			} else if($_POST['action'] == "sendMessage"){
+				$this->sendMessage();
 			}
 		}
 		if (isset($_POST["loginbtn"])){
@@ -172,18 +174,31 @@ $_SESSION["user"] = $data[0];
 
 	function showFrinds(){
 		$my_id = $_SESSION['user']['id'];
-		$data = $this->db->query("SELECT * FROM friends 
-								JOIN user on user.id = friends.my_id 
-								Where my_id = $my_id")->fetch_all(true);
+		$data = $this->db->query("SELECT * FROM user WHERE id in 
+								(SELECT friend_id from friends where my_id = $my_id
+								union 
+								select my_id from friends where friend_id = $my_id) ")->fetch_all(true);
 		print json_encode($data);
 	}
 
 	function selectFriend(){
 		$friend_id = $_POST['friend_id'];
-		$data = $this->db->query("SELECT * FROM friends 
-								WHERE friend_id = $friend_id")->fetch_all(true);
+		$my_id = $_SESSION['user']['id'];
+		$data = $this->db->query("SELECT * FROM user WHERE id in 
+								(SELECT friend_id from friends where my_id = $my_id
+								union 
+								select my_id from friends where friend_id = $my_id) and id=$friend_id ")->fetch_all(true);
 		print json_encode($data);
 	}
+
+	function sendMessage(){
+		$friend_id =  $_POST['friend_id'];
+		$my_id = $_SESSION['user']['id'];
+		$message = $_POST['message'];
+		$this->db->query("INSERT INTO message(my_id, friend_id, message) VALUES($my_id, $friend_id, '$message')");
+	}
+
+
 }
 $a = new Ajax();
 ?>

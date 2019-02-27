@@ -14,6 +14,7 @@
 	position: absolute;
 	left: -100px;
 	display: none;
+	width: 300px;
 }
 
 .notific_icon{
@@ -21,4 +22,39 @@
 }
 .friend_icon{
 	width: 50px;
+}
+.myform{
+	width: 200px;
+}
+.message{
+	    width: 100%;
+    height: 303px;
+    background: whitesmoke;
+    overflow-y: auto;
+}
+.addMess{
+	    width: 86%;
+    height: 50px;
+    resize: none;
+}
+.messDiv{
+	    width: 300px;
+    height: 400px;
+    position: absolute;
+    border: 2px solid grey;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+.friend_data{
+	    border-bottom: 1px solid;
+    padding: 11px;
+    background: #67727a;
+    margin: 0
+}
+.send{
+	    vertical-align: top;
+    border-style: none;
+    width: 36px;
+    margin-top: 11px;
 }

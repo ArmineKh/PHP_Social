@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100121
 File Encoding         : 65001
 
-Date: 2019-02-25 19:02:20
+Date: 2019-02-27 18:59:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,12 +28,36 @@ CREATE TABLE `friends` (
   KEY `friend_id` (`friend_id`),
   CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of friends
 -- ----------------------------
 INSERT INTO `friends` VALUES ('1', '4', '5');
+INSERT INTO `friends` VALUES ('2', '4', '6');
+INSERT INTO `friends` VALUES ('3', '4', '7');
+INSERT INTO `friends` VALUES ('4', '4', '8');
+INSERT INTO `friends` VALUES ('5', '4', '9');
+
+-- ----------------------------
+-- Table structure for message
+-- ----------------------------
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `my_id` int(11) NOT NULL,
+  `friend_id` int(11) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of message
+-- ----------------------------
+INSERT INTO `message` VALUES ('1', '4', '5', 'iku', '2019-02-27 18:55:29');
+INSERT INTO `message` VALUES ('2', '4', '6', 'hjghj', '2019-02-27 18:56:12');
+INSERT INTO `message` VALUES ('3', '5', '4', 'yhtu', '2019-02-27 18:57:53');
 
 -- ----------------------------
 -- Table structure for request
@@ -48,14 +72,11 @@ CREATE TABLE `request` (
   KEY `my_id` (`my_id`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `request_ibfk_2` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of request
 -- ----------------------------
-INSERT INTO `request` VALUES ('14', '3', '4');
-INSERT INTO `request` VALUES ('15', '6', '4');
-INSERT INTO `request` VALUES ('16', '8', '4');
 
 -- ----------------------------
 -- Table structure for user
