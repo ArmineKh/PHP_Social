@@ -24,7 +24,14 @@ class Ajax{
 				$this->selectFriend();
 			} else if($_POST['action'] == "sendMessage"){
 				$this->sendMessage();
+			} else if($_POST['action'] == "getMessage"){
+				$this->getMessage();
+			} else if($_POST['action'] == "addStatus"){
+				$this->addStatus();
+			} else if($_POST['action'] == "showStatus"){
+				$this->showStatus();
 			}
+			
 		}
 		if (isset($_POST["loginbtn"])){
 			$this->logIn();
@@ -115,7 +122,7 @@ class Ajax{
 		$this->db->query("UPDATE user SET name = '$name', surname = '$surname', age = $age WHERE id = $id ");
 		$data = $this->db->query("SELECT * FROM user
 			WHERE id = '$id'")->fetch_all(true);
-$_SESSION["user"] = $data[0];
+		$_SESSION["user"] = $data[0];
 		header("location:profile.php");
 
 	}
@@ -123,7 +130,7 @@ $_SESSION["user"] = $data[0];
 	function imageUploude(){
 		$p = $_FILES["img"];
 		$id = $_SESSION["user"]['id'];
-			$tmp = $p["tmp_name"];
+		$tmp = $p["tmp_name"];
 			$address = "images/".time().$p["name"];//stacvac hascen petq e pahel bazayum
 			$this->db->query("UPDATE user set photo = '$address' WHERE id = $id"); 
 			//update piti anenq ev avelacnenq nshvac id-ov useri photon
@@ -134,71 +141,93 @@ $_SESSION["user"] = $data[0];
 
 			$_SESSION['user']['photo'] = $address;
 			header('location:profile.php');
+		}
+
+		function search(){
+			$search = $_POST['search'];
+			$data = $this->db->query("SELECT * FROM user WHERE name LIKE '$search%'")->fetch_all(true);
+			print json_encode($data);
+		}
+
+		function addFriendRequest(){
+			$user_id = $_POST['id'];
+			$my_id = $_SESSION['user']['id'];
+			$this->db->query("INSERT INTO request (user_id, my_id) VALUES($user_id, $my_id)");
+
+
+		}
+
+		function getRequest(){
+			$my_id = $_SESSION['user']['id'];
+			$data = $this->db->query("SELECT * FROM request 
+				JOIN user on user.id = request.my_id 
+				Where user_id = $my_id")->fetch_all(true);
+			print json_encode($data);
+		}
+
+		function addFriend(){
+			$friend_id = $_POST['friend_id'];
+			$my_id = $_SESSION['user']['id'];
+			$this->db->query("INSERT INTO friends(my_id, friend_id)  VALUES($my_id, $friend_id)");
+			$this->db->query("DELETE FROM request WHERE user_id = $my_id  AND my_id = $friend_id");
+
+		}
+
+		function deleteRequest(){
+			$friend_id = $_POST['friend_id'];
+			$my_id = $_SESSION['user']['id'];
+			$this->db->query("DELETE FROM request WHERE user_id = $my_id  AND my_id = $friend_id");
+		}
+
+		function showFrinds(){
+			$my_id = $_SESSION['user']['id'];
+			$data = $this->db->query("SELECT * FROM user WHERE id in 
+				(SELECT friend_id from friends where my_id = $my_id
+				union 
+				select my_id from friends where friend_id = $my_id) ")->fetch_all(true);
+			print json_encode($data);
+		}
+
+		function selectFriend(){
+			$friend_id = $_POST['friend_id'];
+			$my_id = $_SESSION['user']['id'];
+			$data = $this->db->query("SELECT * FROM user WHERE id in 
+				(SELECT friend_id from friends where my_id = $my_id
+				union 
+				select my_id from friends where friend_id = $my_id) and id=$friend_id ")->fetch_all(true);
+			print json_encode($data);
+		}
+
+		function sendMessage(){
+			$friend_id =  $_POST['friend_id'];
+			$my_id = $_SESSION['user']['id'];
+			$message = $_POST['message'];
+			$this->db->query("INSERT INTO message(my_id, friend_id, message) VALUES($my_id, $friend_id, '$message')");
+		}
+
+		function getMessage(){
+			$friend_id = $_POST['friend_id'];
+			$my_id = $_SESSION['user']['id'];
+			$data = $this->db->query("SELECT *  from message where friend_id = $friend_id or friend_id = $my_id")->fetch_all(true);
+			print json_encode($data);
+		}
+
+		function addStatus(){
+			$status = $_POST['status'];
+			$my_id = $_SESSION['user']['id'];
+			$this->db->query("INSERT INTO status(my_id, status) VALUES($my_id, '$status')");
+		}
+
+		function showStatus(){
+			$my_id = $_SESSION['user']['id'];
+			$data = $this->db->query("SELECT status.*,user.name,user.surname,user.photo  from status join user on user.id = status.my_id where my_id = $my_id or my_id in 
+				(SELECT friend_id from friends where my_id = $my_id
+				union 
+				select my_id from friends where friend_id = $my_id) order by time desc")->fetch_all(true);
+			print json_encode($data);
+
+		}
+
 	}
-
-	function search(){
-		$search = $_POST['search'];
-		$data = $this->db->query("SELECT * FROM user WHERE name LIKE '$search%'")->fetch_all(true);
-		print json_encode($data);
-	}
-
-	function addFriendRequest(){
-		$user_id = $_POST['id'];
-		$my_id = $_SESSION['user']['id'];
-		$this->db->query("INSERT INTO request (user_id, my_id) VALUES($user_id, $my_id)");
-
-
-	}
-
-	function getRequest(){
-		$my_id = $_SESSION['user']['id'];
-		$data = $this->db->query("SELECT * FROM request 
-								JOIN user on user.id = request.my_id 
-								Where user_id = $my_id")->fetch_all(true);
-		print json_encode($data);
-	}
-
-	function addFriend(){
-		$friend_id = $_POST['friend_id'];
-		$my_id = $_SESSION['user']['id'];
-		$this->db->query("INSERT INTO friends(my_id, friend_id)  VALUES($my_id, $friend_id)");
-		$this->db->query("DELETE FROM request WHERE user_id = $my_id  AND my_id = $friend_id");
-
-	}
-
-	function deleteRequest(){
-		$friend_id = $_POST['friend_id'];
-		$my_id = $_SESSION['user']['id'];
-		$this->db->query("DELETE FROM request WHERE user_id = $my_id  AND my_id = $friend_id");
-	}
-
-	function showFrinds(){
-		$my_id = $_SESSION['user']['id'];
-		$data = $this->db->query("SELECT * FROM user WHERE id in 
-								(SELECT friend_id from friends where my_id = $my_id
-								union 
-								select my_id from friends where friend_id = $my_id) ")->fetch_all(true);
-		print json_encode($data);
-	}
-
-	function selectFriend(){
-		$friend_id = $_POST['friend_id'];
-		$my_id = $_SESSION['user']['id'];
-		$data = $this->db->query("SELECT * FROM user WHERE id in 
-								(SELECT friend_id from friends where my_id = $my_id
-								union 
-								select my_id from friends where friend_id = $my_id) and id=$friend_id ")->fetch_all(true);
-		print json_encode($data);
-	}
-
-	function sendMessage(){
-		$friend_id =  $_POST['friend_id'];
-		$my_id = $_SESSION['user']['id'];
-		$message = $_POST['message'];
-		$this->db->query("INSERT INTO message(my_id, friend_id, message) VALUES($my_id, $friend_id, '$message')");
-	}
-
-
-}
-$a = new Ajax();
-?>
+	$a = new Ajax();
+	?>

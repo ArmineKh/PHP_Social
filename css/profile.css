@@ -58,3 +58,57 @@
     width: 36px;
     margin-top: 11px;
 }
+.my,.you{
+	border-radius: 12px;
+	padding: 10px;
+
+}
+.my{
+	background: green;
+	text-align: right;
+	float: right;
+}
+.parentDiv{
+	overflow: hidden;
+	margin: 15px 0;
+}
+
+.you{
+	background: red;
+	text-align: left;
+	float: left;
+}
+.post{
+	    vertical-align: top;
+    border-style: none;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+.statusDiv{
+	width: 300px;
+    height: 40px;
+    text-align: center;
+
+}
+.addStatus{
+	width: 84%;
+	height: 37px;
+    border: 2px solid grey;
+    right: 0;
+    bottom: 0;
+    resize: none;
+}
+
+.showStatus{
+	 border-radius: 12px;
+    border: 2px outset;
+    padding: 10px;
+}
+.status_item{
+	border-radius: 12px;
+    border: 2px inset;
+    margin: 10px 0;
+    text-align: left;
+    padding: 10px;
+}

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100121
 File Encoding         : 65001
 
-Date: 2019-02-27 18:59:16
+Date: 2019-03-01 18:56:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,6 @@ INSERT INTO `friends` VALUES ('1', '4', '5');
 INSERT INTO `friends` VALUES ('2', '4', '6');
 INSERT INTO `friends` VALUES ('3', '4', '7');
 INSERT INTO `friends` VALUES ('4', '4', '8');
-INSERT INTO `friends` VALUES ('5', '4', '9');
 
 -- ----------------------------
 -- Table structure for message
@@ -49,8 +48,12 @@ CREATE TABLE `message` (
   `friend_id` int(11) NOT NULL,
   `message` varchar(255) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `my_id` (`my_id`),
+  KEY `friend_id` (`friend_id`),
+  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of message
@@ -58,6 +61,15 @@ CREATE TABLE `message` (
 INSERT INTO `message` VALUES ('1', '4', '5', 'iku', '2019-02-27 18:55:29');
 INSERT INTO `message` VALUES ('2', '4', '6', 'hjghj', '2019-02-27 18:56:12');
 INSERT INTO `message` VALUES ('3', '5', '4', 'yhtu', '2019-02-27 18:57:53');
+INSERT INTO `message` VALUES ('4', '4', '7', 'zhbz', '2019-03-01 17:18:08');
+INSERT INTO `message` VALUES ('5', '4', '6', 'cncmncmk\n', '2019-03-01 17:20:05');
+INSERT INTO `message` VALUES ('6', '5', '4', 'tsduy', '2019-03-01 17:35:37');
+INSERT INTO `message` VALUES ('7', '5', '4', 'vfuft', '2019-03-01 17:35:38');
+INSERT INTO `message` VALUES ('8', '5', '4', 'hougig', '2019-03-01 17:35:38');
+INSERT INTO `message` VALUES ('9', '4', '6', 'ukiyhui', '2019-03-01 17:32:47');
+INSERT INTO `message` VALUES ('10', '4', '5', 'hkjgk', '2019-03-01 17:43:08');
+INSERT INTO `message` VALUES ('11', '4', '5', 'jkjk', '2019-03-01 17:43:15');
+INSERT INTO `message` VALUES ('12', '4', '5', 'jkj', '2019-03-01 17:43:17');
 
 -- ----------------------------
 -- Table structure for request
@@ -72,11 +84,33 @@ CREATE TABLE `request` (
   KEY `my_id` (`my_id`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `request_ibfk_2` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of request
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for status
+-- ----------------------------
+DROP TABLE IF EXISTS `status`;
+CREATE TABLE `status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `my_id` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `my_id` (`my_id`),
+  CONSTRAINT `status_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of status
+-- ----------------------------
+INSERT INTO `status` VALUES ('1', '4', 'hgbiuygf', '2019-01-17 17:46:09');
+INSERT INTO `status` VALUES ('2', '4', 'gikgfy', '2019-01-25 18:46:09');
+INSERT INTO `status` VALUES ('3', '9', 'hujhuj', '2019-03-01 18:46:09');
+INSERT INTO `status` VALUES ('4', '7', 'eekjejire', '2019-03-01 18:46:09');
 
 -- ----------------------------
 -- Table structure for user
