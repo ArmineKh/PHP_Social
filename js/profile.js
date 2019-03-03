@@ -66,8 +66,6 @@ function getRequest(){
           <button class="btn btn-sm btn-danger float-right mt-2 delete_request" data-id="${item.id}">Delete Request</button>
           </div>`);
         $("#request_result").append(n);
-
-
       });
     }
   });
@@ -101,7 +99,6 @@ $(document).on("click",".add_friend", function(){
     type: 'POST',
     data: {action: 'addFriend', friend_id : friend_id},
     success: function(r){
-      console.log(r);
     }
   });
 
@@ -119,7 +116,6 @@ $(document).on("click",".delete_request", function(){
     type: 'POST',
     data: {action: 'deleteRequest', friend_id : friend_id},
     success: function(r){
-      console.log(r);
     }
   });
 })
@@ -199,5 +195,5 @@ $(document).on("click",".send", function(){
 /***************** END SEND MESSAGE **************************/
 
 function getMessage(id){
-
+  
 }
