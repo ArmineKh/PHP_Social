@@ -10,7 +10,6 @@ $(document).on("input", "#search", function(){
       data: {action: 'ajax2', search: search},
       success: function(r){
         r = JSON.parse(r);
-        console.log(r);
         r.forEach( function(item) {
           let n = $(`<div class="user_item p-3 bg-dark text-light" style = "width:321px">
             <h6>
@@ -35,7 +34,6 @@ $(document).on('click','.add', function(){
   let id = $(this).data('id');
   $(this).after(` <button class="btn btn-sm btn-danger float-right mt-2 delete_request" data-id="${id}">Delete Request</button>`)
   $(this).remove();
-  console.log(id)
   $.ajax({
     url: 'server.php',
     type: 'POST',
@@ -56,7 +54,6 @@ function getRequest(){
     type: 'POST',
     data: {action: 'getRequest'},
     success: function(r){
-      console.log(r);
       r = JSON.parse(r);
       r.forEach( function(item) {
         let n = $(`<div class=" p-3 bg-dark text-light" style = "width:500px">
@@ -132,7 +129,6 @@ function showFrinds(){
     type: 'POST',
     data: {action: 'showFrinds'},
     success: function(r){
-      console.log(r);
       r = JSON.parse(r);
       r.forEach( function(item) {
         let n = $(`<div class=" p-3 bg-dark text-light">
@@ -151,10 +147,13 @@ showFrinds();
 
 
 /***************** SELECT Friends **************************/
+let int
 $(document).on("click",".friend", function(){
   let friend_id = $(this).attr('data-id');
-  getMessage(friend_id)
-  console.log(friend_id);
+  $("#friend_list").hide()
+  getMessage(friend_id);
+  clearInterval(int)
+  int = setInterval(getMessage,1000,friend_id)
   $.ajax({
     url: 'server.php',
     type: 'POST',
@@ -177,7 +176,6 @@ $(document).on("click",".friend", function(){
 
 /***************** SEND MESSAGE **************************/
 $(document).on("click",".send", function(){
-  alert()
   let friend_id = $(this).attr("data-id");
   let message = $(".addMess").val(); 
   $.ajax({
@@ -194,6 +192,121 @@ $(document).on("click",".send", function(){
 
 /***************** END SEND MESSAGE **************************/
 
+
+/***************** SHOW MESSAGE **************************/
+
 function getMessage(id){
-  
+$.ajax({
+  url: 'server.php',
+  type: 'POST',
+  data: {action: 'getMessage', friend_id: id},
+  success: function(r){
+    r = JSON.parse(r);
+  $(".message").empty()
+    r.forEach(function(item){
+
+      if (item.my_id != id) {
+         let m = $(`<div class='parentDiv'><div class='my'>
+                  <h6>${item.message}</h6>
+                  <small>${item.time}</small>
+        </div></div>`);
+      $(".message").append(m);
+
+      }
+      else{
+
+      let m = $(`<div class='parentDiv'><div class='you'>
+                  <h6>${item.message}</h6>
+                  <small>${item.time}</small>
+          </div></div>`);
+      $(".message").append(m);
+      }
+    })
+  }
+});
+
 }
+
+/***************** SHOW MESSAGE **************************/
+
+/***************** Close CHATBOX **************************/
+$(document).on("click", ".close", function(){
+ clearInterval(int);
+  $(".messDiv").hide();
+});
+
+/***************** END Close CHATBOX **************************/
+
+$(document).on("click", ".post", function(){
+let status = $(".addStatus").val();
+$.ajax({
+  url: 'server.php',
+  type: 'POST',
+  data: {action: 'addStatus', status: status },
+  success: function(r){
+     $(".addStatus").val('');
+  }
+});
+
+});
+
+function showStatus(){
+$.ajax({
+  url: 'server.php',
+  type: 'POST',
+  data: {action: 'showStatus'},
+  success: function(r){
+    r = JSON.parse(r);
+    console.log(r)
+    r.forEach(function(item){
+      let s = $(`<div class ='status_item'>
+          <div>
+            <img src=" ${item.photo}" width=50  height=50 style='border-radius:50%'/> ${item.name} ${item.surname}
+          </div>
+          ${item.status}
+          <img src="images/like.png" class='like' width= '40'>
+          <div class='likeCount'></div>
+          <img src="images/share.png" class='share' width= '36'>
+
+
+// like  share kochakneri avelacum like tabli avelacum db-um
+        </div>`);
+      $(".showStatus").append(s);
+    });
+  }
+});
+}
+showStatus();
+
+$(document).on("click", ".like", function(){
+$.ajax({
+  url: 'server.php',
+  type: 'POST',
+  data: {action: 'addlike'},
+  success: function(r){
+    r = JSON.parse(r);
+    console.log(r);
+    r.forEach( function(item) {
+      $(".likeCount").html(${r.count});
+    });
+  }
+})
+});
+
+$(document).on("click","share",function(){
+$("#shareDiv").fadeIn();
+let friends = [];
+if($(".shareChack").attr('checked'=='checked')){
+friends = friends.push($(".shareChack").attr('id'));
+}
+
+$.ajax({
+  url: 'server.php',
+  type: "POST",
+  data: {action: "addShare", friends: friends},
+  success: function(r){
+    
+  }
+
+});
+});
