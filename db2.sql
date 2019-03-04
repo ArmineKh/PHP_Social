@@ -1,19 +1,40 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : MyConnection
-Source Server Version : 100137
+Source Server         : localhost
+Source Server Version : 100121
 Source Host           : localhost:3306
-Source Database       : db
+Source Database       : db2
 
 Target Server Type    : MYSQL
-Target Server Version : 100137
+Target Server Version : 100121
 File Encoding         : 65001
 
-Date: 2019-03-03 20:51:57
+Date: 2019-03-04 18:54:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `my_id` int(11) DEFAULT NULL,
+  `post_id` int(11) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `my_id` (`my_id`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+INSERT INTO `comment` VALUES ('1', '4', '6', 'zhx', '2019-03-04 18:27:32');
+INSERT INTO `comment` VALUES ('2', '4', '6', 'sxfh', '2019-03-04 18:27:34');
 
 -- ----------------------------
 -- Table structure for friends
@@ -45,17 +66,23 @@ DROP TABLE IF EXISTS `like`;
 CREATE TABLE `like` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `my_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `count` int(11) NOT NULL DEFAULT '0',
+  `post_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `my_id` (`my_id`),
   CONSTRAINT `like_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of like
 -- ----------------------------
-INSERT INTO `like` VALUES ('1', '4', '5', '0');
+INSERT INTO `like` VALUES ('1', '4', '5');
+INSERT INTO `like` VALUES ('2', '4', '7');
+INSERT INTO `like` VALUES ('26', '5', '4');
+INSERT INTO `like` VALUES ('45', '4', '4');
+INSERT INTO `like` VALUES ('49', '4', '6');
+INSERT INTO `like` VALUES ('50', '4', '6');
+INSERT INTO `like` VALUES ('51', '4', '6');
+INSERT INTO `like` VALUES ('52', '4', '6');
 
 -- ----------------------------
 -- Table structure for message
@@ -121,7 +148,7 @@ CREATE TABLE `status` (
   PRIMARY KEY (`id`),
   KEY `my_id` (`my_id`),
   CONSTRAINT `status_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of status
@@ -130,6 +157,8 @@ INSERT INTO `status` VALUES ('1', '4', 'hgbiuygf', '2019-01-17 17:46:09');
 INSERT INTO `status` VALUES ('2', '4', 'gikgfy', '2019-01-25 18:46:09');
 INSERT INTO `status` VALUES ('3', '9', 'hujhuj', '2019-03-01 18:46:09');
 INSERT INTO `status` VALUES ('4', '7', 'eekjejire', '2019-03-01 18:46:09');
+INSERT INTO `status` VALUES ('5', '4', 'rusr6oito\n', '2019-03-04 17:32:08');
+INSERT INTO `status` VALUES ('6', '4', 'vgjmfvj', '2019-03-04 17:32:19');
 
 -- ----------------------------
 -- Table structure for user

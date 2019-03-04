@@ -4,7 +4,7 @@ if (!isset($_SESSION['user'])){
 	header('location:index.php');
 } else{
 	$user = $_SESSION['user'];
-	$friends=$_SESSION['friends'];
+
 }
 
 
@@ -15,6 +15,7 @@ if (!isset($_SESSION['user'])){
 <div class="row m-0">
 
 	<div class="col-3">
+		<input type="hidden" id='id' value='<?=$user['id'] ?>'>
 		<img src="<?php print $_SESSION['user']['photo'] ?>" width = "200" height = "200">
 		<form action="server.php" method="POST" enctype="multipart/form-data" class="p-3 bg-dark text-light myform">
 			<input type="file" name="img" class="form-control profpic">
@@ -31,19 +32,6 @@ if (!isset($_SESSION['user'])){
 		<div class="showStatus"></div>
 	</div>
 </div>
-
-<div id="shareDiv">
-	<form action="profile.php">
-  <input type="checkbox" name="allFriends" value="allFriends"> All friends <br>
-  <?php foreach ($friends as $key) { ?>
-  <input type="checkbox" class="shareChack"> name="<?php print $friends['name']?>" value="print $friends['name']? id = "<?= $friends['id']?>">"><?= $friends['name']."  ".$friends['surname'] ?><br>
-  	<?php
-  } ?>
-  <input type="submit" value="Share">
-</form>
-</div>
-
-
 
 
 

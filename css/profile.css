@@ -118,26 +118,13 @@
     /*width: 36px;*/
     margin-top: 11px;
 }
-.share{
-	vertical-align: top;
-    border-style: none;
-    width: 26px;
-    margin-top: 11px;
-}
+
 .likeCount{
 	width: 40px;
 	height: 40px;
 	text-align: center;
 }
-#shareDiv{
-	width: 200px;
-	height: 200px;
-	resize: none;
-	position: absolute;
-    border: 2px solid grey;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
+
+.like_user{
     display: none;
 }

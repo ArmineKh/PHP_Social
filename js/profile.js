@@ -258,18 +258,35 @@ $.ajax({
   success: function(r){
     r = JSON.parse(r);
     console.log(r)
+    let id = $("#id").val()
     r.forEach(function(item){
+      let k= item.likes.some(a=>a.id==id)
+      let comment = ''
+      item.comment.forEach(function(i){
+        comment+=`<div>
+            <img src="${i.photo}" width=50 height=50/>${i.name +' '+ i.surname}<br>${i.comment}
+        </div>`
+      })
+
+       let likes = ''
+        item.likes.forEach(function(i){
+        likes+=`<div class="like_user">
+            <img src="${i.photo}" width=50 height=50/>${i.name +' '+ i.surname}
+        </div>`
+      })
       let s = $(`<div class ='status_item'>
           <div>
             <img src=" ${item.photo}" width=50  height=50 style='border-radius:50%'/> ${item.name} ${item.surname}
           </div>
-          ${item.status}
-          <img src="images/like.png" class='like' width= '40'>
-          <div class='likeCount'></div>
-          <img src="images/share.png" class='share' width= '36'>
-
-
-// like  share kochakneri avelacum like tabli avelacum db-um
+          ${item.status} <br />
+          <b class='likeCount'>${item.likes.length}</b>
+          <img src="images/${(k)?'dislike':'like'}.png" class='${(k)?'dislike':'like'}' width= '40' id = "${item.id}">
+           <div class='like_users'>${likes}</div>
+          <div class='comment'>
+            <textarea class='comment_mess' ></textarea>
+            <button class='add_comm' id='${item.id}'>Add</button>
+            <div class='comment_div'>${comment}</div>
+          </div>
         </div>`);
       $(".showStatus").append(s);
     });
@@ -279,34 +296,42 @@ $.ajax({
 showStatus();
 
 $(document).on("click", ".like", function(){
+  let post_id = $(this).attr("id");
+
+  let  t =$(this)
 $.ajax({
   url: 'server.php',
   type: 'POST',
-  data: {action: 'addlike'},
+  data: {action: 'addlike', post_id: post_id},
   success: function(r){
-    r = JSON.parse(r);
-    console.log(r);
-    r.forEach( function(item) {
-      $(".likeCount").html(${r.count});
-    });
+  let count =  t.prev().html();
+   t.prev().html(++count)
+   t.attr("src",'images/dislike.png').removeClass('like').addClass('dislike')
+  
   }
 })
 });
 
-$(document).on("click","share",function(){
-$("#shareDiv").fadeIn();
-let friends = [];
-if($(".shareChack").attr('checked'=='checked')){
-friends = friends.push($(".shareChack").attr('id'));
-}
+$(document).on("click", '.add_comm', function(){
+  let post_id = $(this).attr('id');
+  let comment = $(this).prev().val();
 
+  let t = $(this);
 $.ajax({
-  url: 'server.php',
+  url: "server.php",
   type: "POST",
-  data: {action: "addShare", friends: friends},
+  data: {action: 'addComment', post_id: post_id, comment: comment},
   success: function(r){
-    
+    $(".comment_div").fadeIn();
+    t.prev().val("");
+    $(".comment_div").html(comment);
   }
+})
+});
 
-});
-});
+$(document).on("click", ".dislike", function(){
+  $(this).attr("src","images/like.png").removeClass('dislike').addClass('like');
+})
+$(document).on("click", ".likeCount", function(){
+  $(".like_user").fadeIn();
+})

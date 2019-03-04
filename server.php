@@ -32,8 +32,8 @@ class Ajax{
 				$this->showStatus();
 			} else if($_POST['action'] == "addlike"){
 				$this->addlike();
-			} else if($_POST['action'] == "addshare"){
-				$this->addshare();
+			} else if($_POST['action'] == "addComment"){
+				$this->addComment();
 			}
 			
 		}
@@ -97,8 +97,6 @@ class Ajax{
 		$error = [];
 		$data = $this->db->query("SELECT * FROM user
 			WHERE email = '$email'")->fetch_all(true);
-		$friends = $this->db->query("SELECT * FROM friends
-		join user on user.id = friends.friend_id Where my_id = $data[0]['id'] or friend_id = $data[0]['id']")->fetch_all(true);
 		if(empty($data)){
 			$error['email'] = "Nman tvyal chka grancvac";
 		}
@@ -231,22 +229,34 @@ class Ajax{
 				(SELECT friend_id from friends where my_id = $my_id
 				union 
 				select my_id from friends where friend_id = $my_id) order by time desc")->fetch_all(true);
-			print json_encode($data);
+			$arr = [];
+			foreach ($data as $key ) {
+				$post_id=$key['id'];
+				$key['likes'] = $this->db->query("SELECT user.* from `like`
+				join user on user.id = `like`.my_id
+				 WHERE post_id = $post_id")->fetch_all(true);
+				$key['comment'] = $this->db->query("SELECT user.*,comment.comment from `comment`
+				join user on user.id = `comment`.my_id
+				 WHERE post_id = $post_id")->fetch_all(true);
+				$arr[]=$key;
+			}
+			print json_encode($arr);
 		}
 
 		function addlike(){
 			$my_id = $_SESSION['user']['id'];
-			$count = $this->db->query("SELECT count FROM like where my_id = $my_id")->fetch_all(true);
-			$this->db->query("INSERT INTO like(my_id, count) VALUES($my_id, $count++)");
-			$newLike = $this->db->query("SELECT count FROM like WHERE mi_id = $my_id");
-			print json_encode($newLike);
+			$post_id = $_POST['post_id']; 
+			$this->db->query("INSERT INTO `like`(my_id, post_id) VALUES($my_id, $post_id)");
 
 		}
 
-		function addshare(){
-			$friends = $_POST['friends'];
-			
+		function addComment(){
+			$my_id = $_SESSION['user']['id'];
+		$post_id = $_POST['post_id'];
+		$comment = $_POST['comment'];
+		$this->db->query("INSERT INTO comment(post_id, comment, my_id) VALUES($post_id, '$comment', $my_id)");		
 		}
+		
 	}
 	$a = new Ajax();
 	?>
