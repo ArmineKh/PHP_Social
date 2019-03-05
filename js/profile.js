@@ -18,10 +18,7 @@ $(document).on("input", "#search", function(){
             <button class="btn btn-sm btn-success float-right mt-2 add" data-id="${item.id}">Add Friend</button>
             </h6></div>`);
           $("#search_result").append(n);
-
-
         });
-
       }
     });
   }
@@ -131,7 +128,7 @@ function showFrinds(){
     success: function(r){
       r = JSON.parse(r);
       r.forEach( function(item) {
-        let n = $(`<div class=" p-3 bg-dark text-light">
+        let n = $(`<div class=" p-3 bg-dark text-light friend" id="${item.id}">
           <img src="${item['photo']}" width = "50" height = "50" style = 'border-radius:50%'>
           ${item['name']} ${item['surname']}
           <img src = "images/mess.png" class="friend" width = '30' data-id="${item.id}" >
@@ -237,6 +234,9 @@ $(document).on("click", ".close", function(){
 
 /***************** END Close CHATBOX **************************/
 
+/***************** add Status **************************/
+
+
 $(document).on("click", ".post", function(){
 let status = $(".addStatus").val();
 $.ajax({
@@ -249,6 +249,9 @@ $.ajax({
 });
 
 });
+/***************** END add Status **************************/
+
+/***************** show Status **************************/
 
 function showStatus(){
 $.ajax({
@@ -257,7 +260,6 @@ $.ajax({
   data: {action: 'showStatus'},
   success: function(r){
     r = JSON.parse(r);
-    console.log(r)
     let id = $("#id").val()
     r.forEach(function(item){
       let k= item.likes.some(a=>a.id==id)
@@ -285,6 +287,7 @@ $.ajax({
           <div class='comment'>
             <textarea class='comment_mess' ></textarea>
             <button class='add_comm' id='${item.id}'>Add</button>
+            <button id="showComm">Show comments</button>
             <div class='comment_div'>${comment}</div>
           </div>
         </div>`);
@@ -295,22 +298,28 @@ $.ajax({
 }
 showStatus();
 
+/***************** END show Status **************************/
+
+/***************** add like **************************/
+
 $(document).on("click", ".like", function(){
   let post_id = $(this).attr("id");
-
-  let  t =$(this)
+  let  t =$(this);
 $.ajax({
   url: 'server.php',
   type: 'POST',
   data: {action: 'addlike', post_id: post_id},
   success: function(r){
   let count =  t.prev().html();
-   t.prev().html(++count)
-   t.attr("src",'images/dislike.png').removeClass('like').addClass('dislike')
-  
+   t.prev().html(++count);
+   t.attr("src",'images/dislike.png').removeClass('like').addClass('dislike');
   }
-})
 });
+});
+
+/***************** END add like **************************/
+
+/*****************  add comment **************************/
 
 $(document).on("click", '.add_comm', function(){
   let post_id = $(this).attr('id');
@@ -329,9 +338,30 @@ $.ajax({
 })
 });
 
+/***************** END add comment **************************/
+
+/*****************  add like and dislike **************************/
+
 $(document).on("click", ".dislike", function(){
   $(this).attr("src","images/like.png").removeClass('dislike').addClass('like');
-})
+});
 $(document).on("click", ".likeCount", function(){
   $(".like_user").fadeIn();
+});
+$(document).on("click", "#showComm", function(){
+  $(".comment_div").slideToggle();
+});
+
+/*****************  add like and dislike **************************/
+
+$(document).on("click",".friend", function(){
+  let friend_id = $(this).attr('id');
+  $.ajax({
+    url: "server.php",
+    type: "POST",
+    data: {action: "showFriend", friend_id: friend},
+    success: function(r){
+      location.href = "friend.php"
+    }
+  })
 })

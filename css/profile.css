@@ -113,10 +113,13 @@
     padding: 10px;
 }
 .like{
-	vertical-align: top;
-    border-style: none;
-    /*width: 36px;*/
-    margin-top: 11px;
+    width: 36px;
+    margin: 5px;
+}
+
+.dislike{
+    width: 36px;
+    margin: 5px;
 }
 
 .likeCount{
@@ -127,4 +130,32 @@
 
 .like_user{
     display: none;
+}
+.comment_mess{
+	width: 84%;
+    height: 37px;
+    border: 2px solid grey;
+    right: 0;
+    bottom: 0;
+    resize: none;
+}
+
+.add_comm{
+	vertical-align: top;
+	border: 2px solid grey;
+	border-radius: 12px;
+    width: 50px;
+    height: 40px;
+    padding: 5px;
+}
+.comment_div{
+	display: none;
+	width: 80%;
+    text-align: center;
+}
+#showComm{
+	border: 2px solid grey;
+	border-radius: 12px;
+    width: 150px;
+    height: 30px;
 }

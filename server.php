@@ -3,7 +3,7 @@ class Ajax{
 	private  $db;
 	function __construct(){
 		session_start();
-		$this->db = new mysqli("localhost", "root", "", "db2");
+		$this->db = new mysqli("localhost", "root", "", "db");
 		if (isset($_POST["action"])){
 			if($_POST["action"] == "ajax1"){
 				$this->signup();
@@ -34,7 +34,11 @@ class Ajax{
 				$this->addlike();
 			} else if($_POST['action'] == "addComment"){
 				$this->addComment();
+			} else if($_POST['action'] == "showFriend"){
+				$this->showFriend();
 			}
+
+			
 			
 		}
 		if (isset($_POST["loginbtn"])){
@@ -104,7 +108,6 @@ class Ajax{
 
 			if(password_verify($password, $data[0]["password"])){
 				$_SESSION["user"] = $data[0];
-				$_SESSION['friends'] = $friends;
 				header("location:profile.php");
 
 			} else {
@@ -255,6 +258,14 @@ class Ajax{
 		$post_id = $_POST['post_id'];
 		$comment = $_POST['comment'];
 		$this->db->query("INSERT INTO comment(post_id, comment, my_id) VALUES($post_id, '$comment', $my_id)");		
+		}
+
+		function showFriend(){
+			$friend_id = $_POST['friend_id'];
+			$data = $this->db->query("SELECT * FROM friends JOIN user on user.id=friends.friend_id
+				WHERE friend_id = $friend_id")->fetch_all(true);
+			$_SESSION["friend"] = $data;
+				header("location:friend.php");
 		}
 		
 	}
