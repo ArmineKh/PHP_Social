@@ -10,12 +10,24 @@ $(document).on("input", "#search", function(){
       data: {action: 'ajax2', search: search},
       success: function(r){
         r = JSON.parse(r);
+        console.log(r)
         r.forEach( function(item) {
+            let text=`<button class="btn btn-sm btn-success float-right mt-2 add" data-id="${item.id}">Add Friend</button>`
+            if (item.status==3) {
+              text=''
+            }
+            else if (item.status==1) {
+              text = `<button class="btn btn-sm btn-info float-right mt-2">Friend</button>`
+            }
+            else if (item.status==2) {
+              text = `<button class="btn btn-sm btn-danger float-right mt-2 del_req" data-id="${item.id}">Delete Request</button>`
+            }
+
           let n = $(`<div class="user_item p-3 bg-dark text-light" style = "width:321px">
             <h6>
             <img src="${item['photo']}" width = "50" height = "50" style = 'border-radius:50%'>
             ${item['name']} ${item['surname']}
-            <button class="btn btn-sm btn-success float-right mt-2 add" data-id="${item.id}">Add Friend</button>
+            ${text}
             </h6></div>`);
           $("#search_result").append(n);
         });
@@ -29,7 +41,7 @@ $(document).on("input", "#search", function(){
 
 $(document).on('click','.add', function(){
   let id = $(this).data('id');
-  $(this).after(` <button class="btn btn-sm btn-danger float-right mt-2 delete_request" data-id="${id}">Delete Request</button>`)
+  $(this).after(` <button class="btn btn-sm btn-danger float-right mt-2 del_req" data-id="${id}">Delete Request</button>`)
   $(this).remove();
   $.ajax({
     url: 'server.php',
@@ -68,7 +80,22 @@ getRequest()
 
 /***************** END REQUEST **************************/
 
+/***************** DELETE REQUEST **************************/
 
+$(document).on("click", ".del_req", function(){
+let friend_id = $(this).attr('data-id');
+let d = $(this);
+$.ajax({
+  url: 'server.php',
+  type: 'POST',
+  data:{action: ' deleteRequest', friend_id: friend_id},
+  success: function(r){
+   d.attr("html", "Add Request").removeClass('del_req').addClass('add');
+  }
+})
+})
+
+/***************** END DELETE REQUEST **************************/
 
 
 $(".notific_icon").click(function(event) {
@@ -128,9 +155,9 @@ function showFrinds(){
     success: function(r){
       r = JSON.parse(r);
       r.forEach( function(item) {
-        let n = $(`<div class=" p-3 bg-dark text-light friend" id="${item.id}">
+        let n = $(`<div class=" p-3 bg-dark text-light" id="${item.id}">
           <img src="${item['photo']}" width = "50" height = "50" style = 'border-radius:50%'>
-          ${item['name']} ${item['surname']}
+         <a href="friend.php?id=${item.id}"> ${item['name']} ${item['surname']}</a>
           <img src = "images/mess.png" class="friend" width = '30' data-id="${item.id}" >
           </div>`);
         $("#friend_list").append(n);
@@ -193,6 +220,7 @@ $(document).on("click",".send", function(){
 /***************** SHOW MESSAGE **************************/
 
 function getMessage(id){
+  console.log(id)
 $.ajax({
   url: 'server.php',
   type: 'POST',
@@ -354,14 +382,14 @@ $(document).on("click", "#showComm", function(){
 
 /*****************  add like and dislike **************************/
 
-$(document).on("click",".friend", function(){
-  let friend_id = $(this).attr('id');
-  $.ajax({
-    url: "server.php",
-    type: "POST",
-    data: {action: "showFriend", friend_id: friend},
-    success: function(r){
-      location.href = "friend.php"
-    }
-  })
-})
+// $(document).on("click",".friend", function(){
+//   let friend_id = $(this).attr('id');
+//   $.ajax({
+//     url: "server.php",
+//     type: "POST",
+//     data: {action: "showFriend", friend_id: friend},
+//     success: function(r){
+//       location.href = "friend.php"
+//     }
+//   })
+// })

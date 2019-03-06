@@ -35,15 +35,7 @@ if (!isset($_SESSION['user'])){
 
 
 
-<div class = "messDiv">
-	<h6 class="friend_data">
-		<b class="fr_data">Photo Name Surname</b>
-		<img src="images/close.png" alt="" width="25" class="float-right close">
-	</h6>
-	<div class="message"></div>
-	<textarea class="addMess" type="text" placeholder="type message...."></textarea>
-	<img src="images/send.png" class = "send"  width = "30">
-</div>
+
 
 
 </body>

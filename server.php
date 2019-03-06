@@ -3,7 +3,7 @@ class Ajax{
 	private  $db;
 	function __construct(){
 		session_start();
-		$this->db = new mysqli("localhost", "root", "", "db");
+		$this->db = new mysqli("localhost", "root", "", "db2");
 		if (isset($_POST["action"])){
 			if($_POST["action"] == "ajax1"){
 				$this->signup();
@@ -152,9 +152,33 @@ class Ajax{
 		}
 
 		function search(){
+			$id = $_SESSION["user"]['id'];
 			$search = $_POST['search'];
 			$data = $this->db->query("SELECT * FROM user WHERE name LIKE '$search%'")->fetch_all(true);
-			print json_encode($data);
+			$arr = [];
+			foreach ($data as $key ) {
+
+				$user_id = $key['id'];
+				$req = $this->db->query("SELECT * FROM request WHERE my_id = $id and user_id = $user_id")->fetch_all(true);
+				$friend = $this->db->query("SELECT * FROM friends WHERE (my_id = $id and friend_id = $user_id) or (my_id = $user_id and friend_id = $id)")->fetch_all(true);
+
+				if ($id==$user_id) {
+					$key['status']	= 3;				
+				}
+				elseif (!empty($req)) {
+					$key['status']	= 2;				
+				}
+				elseif (!empty($friend)) {
+					$key['status']	= 1;				
+				}
+				else{
+					$key['status']	= 0;				
+
+				}
+
+				$arr[]=$key;
+			}
+			print json_encode($arr);
 		}
 
 		function addFriendRequest(){

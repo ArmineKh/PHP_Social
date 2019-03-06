@@ -15,6 +15,7 @@
 	left: -100px;
 	display: none;
 	width: 300px;
+    z-index: 111;
 }
 
 .notific_icon{
@@ -158,4 +159,7 @@
 	border-radius: 12px;
     width: 150px;
     height: 30px;
+}
+.user_item {
+z-index: 115;
 }
