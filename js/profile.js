@@ -10,7 +10,6 @@ $(document).on("input", "#search", function(){
       data: {action: 'ajax2', search: search},
       success: function(r){
         r = JSON.parse(r);
-        console.log(r)
         r.forEach( function(item) {
             let text=`<button class="btn btn-sm btn-success float-right mt-2 add" data-id="${item.id}">Add Friend</button>`
             if (item.status==3) {

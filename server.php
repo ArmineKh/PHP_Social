@@ -3,7 +3,7 @@ class Ajax{
 	private  $db;
 	function __construct(){
 		session_start();
-		$this->db = new mysqli("localhost", "root", "", "db2");
+		$this->db = new mysqli("localhost", "root", "", "db");
 		if (isset($_POST["action"])){
 			if($_POST["action"] == "ajax1"){
 				$this->signup();
@@ -287,9 +287,13 @@ class Ajax{
 		function showFriend(){
 			$friend_id = $_POST['friend_id'];
 			$data = $this->db->query("SELECT * FROM friends JOIN user on user.id=friends.friend_id
-				WHERE friend_id = $friend_id")->fetch_all(true);
-			$_SESSION["friend"] = $data;
-				header("location:friend.php");
+									JOIN `like` on `like`.my_id = user.id
+									JOIN comment on comment.my_id = user.id
+									JOIN status on status.my_id = user.id
+									WHERE friend_id = $friend_id")->fetch_all(true);
+			print json_encode($data);
+			// $_SESSION["friend"] = $data;
+			// 	header("location:friend.php");
 		}
 		
 	}
