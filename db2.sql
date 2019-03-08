@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100121
 File Encoding         : 65001
 
-Date: 2019-03-04 18:54:07
+Date: 2019-03-08 18:21:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,14 +49,14 @@ CREATE TABLE `friends` (
   KEY `friend_id` (`friend_id`),
   CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of friends
 -- ----------------------------
 INSERT INTO `friends` VALUES ('1', '4', '5');
 INSERT INTO `friends` VALUES ('2', '4', '6');
-INSERT INTO `friends` VALUES ('3', '4', '7');
+INSERT INTO `friends` VALUES ('3', '7', '4');
 INSERT INTO `friends` VALUES ('4', '4', '8');
 
 -- ----------------------------
@@ -70,7 +70,7 @@ CREATE TABLE `like` (
   PRIMARY KEY (`id`),
   KEY `my_id` (`my_id`),
   CONSTRAINT `like_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of like
@@ -83,6 +83,8 @@ INSERT INTO `like` VALUES ('49', '4', '6');
 INSERT INTO `like` VALUES ('50', '4', '6');
 INSERT INTO `like` VALUES ('51', '4', '6');
 INSERT INTO `like` VALUES ('52', '4', '6');
+INSERT INTO `like` VALUES ('53', '4', '6');
+INSERT INTO `like` VALUES ('54', '4', '6');
 
 -- ----------------------------
 -- Table structure for message
@@ -118,6 +120,26 @@ INSERT INTO `message` VALUES ('11', '4', '5', 'jkjk', '2019-03-01 17:43:15');
 INSERT INTO `message` VALUES ('12', '4', '5', 'jkj', '2019-03-01 17:43:17');
 
 -- ----------------------------
+-- Table structure for photos
+-- ----------------------------
+DROP TABLE IF EXISTS `photos`;
+CREATE TABLE `photos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `photos` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `photos_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of photos
+-- ----------------------------
+INSERT INTO `photos` VALUES ('1', '5', 'images/1550669518Koala.jpg');
+INSERT INTO `photos` VALUES ('2', '5', 'images/1551105193Hydrangeas.jpg');
+INSERT INTO `photos` VALUES ('3', '5', 'images/1550669518Koala.jpg');
+
+-- ----------------------------
 -- Table structure for request
 -- ----------------------------
 DROP TABLE IF EXISTS `request`;
@@ -130,11 +152,23 @@ CREATE TABLE `request` (
   KEY `my_id` (`my_id`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `request_ibfk_2` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of request
 -- ----------------------------
+INSERT INTO `request` VALUES ('1', '4', '3');
+INSERT INTO `request` VALUES ('2', '4', '9');
+INSERT INTO `request` VALUES ('3', '4', '3');
+INSERT INTO `request` VALUES ('4', '4', '3');
+INSERT INTO `request` VALUES ('5', '4', '3');
+INSERT INTO `request` VALUES ('6', '4', '3');
+INSERT INTO `request` VALUES ('7', '4', '3');
+INSERT INTO `request` VALUES ('8', '4', '3');
+INSERT INTO `request` VALUES ('9', '4', '3');
+INSERT INTO `request` VALUES ('10', '4', '3');
+INSERT INTO `request` VALUES ('11', '4', '9');
+INSERT INTO `request` VALUES ('12', '4', '9');
 
 -- ----------------------------
 -- Table structure for status
@@ -153,9 +187,9 @@ CREATE TABLE `status` (
 -- ----------------------------
 -- Records of status
 -- ----------------------------
-INSERT INTO `status` VALUES ('1', '4', 'hgbiuygf', '2019-01-17 17:46:09');
-INSERT INTO `status` VALUES ('2', '4', 'gikgfy', '2019-01-25 18:46:09');
-INSERT INTO `status` VALUES ('3', '9', 'hujhuj', '2019-03-01 18:46:09');
+INSERT INTO `status` VALUES ('1', '5', 'hgbiuygf', '2019-03-08 18:00:29');
+INSERT INTO `status` VALUES ('2', '5', 'gikgfy', '2019-03-08 18:00:29');
+INSERT INTO `status` VALUES ('3', '5', 'hujhuj', '2019-03-08 18:00:29');
 INSERT INTO `status` VALUES ('4', '7', 'eekjejire', '2019-03-01 18:46:09');
 INSERT INTO `status` VALUES ('5', '4', 'rusr6oito\n', '2019-03-04 17:32:08');
 INSERT INTO `status` VALUES ('6', '4', 'vgjmfvj', '2019-03-04 17:32:19');
@@ -178,11 +212,11 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('3', 'Karen', 'Achoyan', '12', 'narek1990099@gmail.com', '$2y$10$cyPGhCiTYHOUCMSsvd91guQn.xU1rExOgLyh/EqaeMx7nReboLOmy', 'images/1550669518Koala.jpg');
-INSERT INTO `user` VALUES ('4', 'Narek', 'Achoyan', '2055', 'a@mail.ru', '$2y$10$dhFydWYY66ru/dI2vYP6be76bwq6ZofIiwquba4XAIfG9wh89irhC', 'images/1551105193Hydrangeas.jpg');
-INSERT INTO `user` VALUES ('5', 'Karine', 'Achoyan', '20', 'a@mail.ru', '$2y$10$mJFQfnGRF8xR4ukFcK3.aOQiq2SV5D0E.Eupg8XqfQhShwO.SlZsi', 'images/1550669518Koala.jpg');
-INSERT INTO `user` VALUES ('6', 'Karen', 'Achoyan', '20', 'a@mail.ru', '$2y$10$d1W23VNePmMrNCFhwGv9euUyxv2LWVuJ6hkdwn474X07J9GIXZ/x.', 'images/1550669518Koala.jpg');
+INSERT INTO `user` VALUES ('3', 'Aren', 'Achoyan', '12', 'narek1990099@gmail.com', '$2y$10$cyPGhCiTYHOUCMSsvd91guQn.xU1rExOgLyh/EqaeMx7nReboLOmy', 'images/1550669518Koala.jpg');
+INSERT INTO `user` VALUES ('4', 'Alen', 'Achoyan', '2055', 'a@mail.ru', '$2y$10$dhFydWYY66ru/dI2vYP6be76bwq6ZofIiwquba4XAIfG9wh89irhC', 'images/1551105193Hydrangeas.jpg');
+INSERT INTO `user` VALUES ('5', 'Armine', 'Achoyan', '20', 'a@mail.ru', '$2y$10$mJFQfnGRF8xR4ukFcK3.aOQiq2SV5D0E.Eupg8XqfQhShwO.SlZsi', 'images/1550669518Koala.jpg');
+INSERT INTO `user` VALUES ('6', 'Aren', 'Achoyan', '20', 'a@mail.ru', '$2y$10$d1W23VNePmMrNCFhwGv9euUyxv2LWVuJ6hkdwn474X07J9GIXZ/x.', 'images/1550669518Koala.jpg');
 INSERT INTO `user` VALUES ('7', 'asd', 'Achoyan', '18', 'a@mail.ru', '$2y$10$QKpNmPVmUdZzMELc7oewQeXoFgl2BmXyL6F394wGVSTGu.7n2gbmu', '');
-INSERT INTO `user` VALUES ('8', 'Karen', 'Achoyan', '12', 'narek1990099@gmail.com', '$2y$10$poWtMgZyUGpt65ywbbo0TuATwyCScuX3o0zUdyxuk.2qBboIZWWGe', '');
-INSERT INTO `user` VALUES ('9', 'Karen', 'Achoyan', '20', 'narek1990099@gmail.com', '$2y$10$6yz4xIRwCHP0cH8gRYiiJOSDD0IVierxz5WQxWXCzVZ8nmnPCJ25W', '');
+INSERT INTO `user` VALUES ('8', 'Ashot', 'Achoyan', '12', 'narek1990099@gmail.com', '$2y$10$poWtMgZyUGpt65ywbbo0TuATwyCScuX3o0zUdyxuk.2qBboIZWWGe', '');
+INSERT INTO `user` VALUES ('9', 'Alla', 'Achoyan', '20', 'narek1990099@gmail.com', '$2y$10$6yz4xIRwCHP0cH8gRYiiJOSDD0IVierxz5WQxWXCzVZ8nmnPCJ25W', '');
 SET FOREIGN_KEY_CHECKS=1;
