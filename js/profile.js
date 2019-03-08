@@ -7,7 +7,7 @@ $(document).on("input", "#search", function(){
     $.ajax({
       url: 'server.php',
       type: 'POST',
-      data: {action: 'ajax2', search: search},
+      data: {action: 'search', search: search},
       success: function(r){
         r = JSON.parse(r);
         r.forEach( function(item) {
@@ -45,7 +45,7 @@ $(document).on('click','.add', function(){
   $.ajax({
     url: 'server.php',
     type: 'POST',
-    data: {action: 'ajax3', id : id},
+    data: {action: 'addFriendRequest', id : id},
     success: function(r){
       console.log(r);
     }

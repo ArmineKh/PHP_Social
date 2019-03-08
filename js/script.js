@@ -8,7 +8,7 @@ $("#save").click(function(event) {
   $.ajax({
     url: 'server.php',
     type: 'POST',
-    data: {action: 'ajax1', name: name, surname: surname,age: age,
+    data: {action: 'signup', name: name, surname: surname,age: age,
     email:email, password:password, cPassword:cPassword},
     success: function(r){
       if (r) {

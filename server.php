@@ -5,46 +5,8 @@ class Ajax{
 		session_start();
 		$this->db = new mysqli("localhost", "root", "", "db2");
 		if (isset($_POST["action"])){
-			if($_POST["action"] == "ajax1"){
-				$this->signup();
-			}  else if ($_POST["action"] == "ajax2") {
-				$this->search();
-			} else if ($_POST["action"] == "ajax3") {
-				$this->addFriendRequest();
-			}
-			else if ($_POST["action"] == "getRequest") {
-				$this->getRequest();
-			} else if($_POST['action'] == "addFriend"){
-				$this->addFriend();
-			} else if($_POST['action'] == "deleteRequest"){
-				$this->deleteRequest();
-			} else if($_POST['action'] == "showFrinds"){
-				$this->showFrinds();
-			} else if($_POST['action'] == "selectFriend"){
-				$this->selectFriend();
-			} else if($_POST['action'] == "sendMessage"){
-				$this->sendMessage();
-			} else if($_POST['action'] == "getMessage"){
-				$this->getMessage();
-			} else if($_POST['action'] == "addStatus"){
-				$this->addStatus();
-			} else if($_POST['action'] == "showStatus"){
-				$this->showStatus();
-			} else if($_POST['action'] == "addlike"){
-				$this->addlike();
-			} else if($_POST['action'] == "addComment"){
-				$this->addComment();
-			} else if($_POST['action'] == "showFriend"){
-				$this->showFriend();
-			} else if($_POST['action'] == "showFrPhoto"){
-				$this->showFrPhoto();
-			}  else if($_POST['action'] == "showFrStatus"){
-				$this->showFrStatus();
-			}
-
-			
-			
-		}
+			$action = $_POST['action'];
+			call_user_func([$this,$action]);
 		if (isset($_POST["loginbtn"])){
 			$this->logIn();
 		}
