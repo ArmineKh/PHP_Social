@@ -9,6 +9,24 @@
 	left: -100px;
 	display: none;
 }
+.navbar{
+    background-color: #808080;
+    height: 100px;
+    margin: 5px 0;
+}
+.message{
+    z-index: 115;
+}
+#i{
+    padding: 10px;
+    margin: 10px;
+    width: 80px;
+    height: 80px;
+}
+#nav{
+    width: 100%;
+    height: 50px;
+}
 
 #friend_list{
 	position: absolute;
@@ -32,6 +50,7 @@
     height: 303px;
     background: whitesmoke;
     overflow-y: auto;
+    z-index: 120;
 }
 .addMess{
 	    width: 86%;
@@ -65,17 +84,18 @@
 
 }
 .my{
-	background: green;
+	background: #2ed277;
 	text-align: right;
 	float: right;
 }
 .parentDiv{
 	overflow: hidden;
 	margin: 15px 0;
+    background-color: #e6f1fd;
 }
 
 .you{
-	background: red;
+	background: #e26588;
 	text-align: left;
 	float: left;
 }

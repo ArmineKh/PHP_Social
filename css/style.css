@@ -1,0 +1,106 @@
+body { margin: 0px;
+	  font-family: Tahoma, Geneva;
+	  font-size: 14px;
+	  background: #d7e0e8; 
+	  position: relative; 
+	  height: 608px;
+	}
+/* PAGE TOP */
+#pageTop {
+	top: 0;
+	background:gray;
+	height: 90px;
+}
+#h{
+	width: 25px;
+	height: 25px;
+	
+
+}
+#log{
+	top: 20px;
+	bottom: 20px;
+}
+.f{    
+	margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 192px;
+}
+#i{
+	padding: 10px;
+	margin: 10px;
+	width: 80px;
+	height: 80px;
+}
+.reg{
+	    margin: 10px;
+     padding: 10px; 
+}
+#pageTop > #pageTopWrap {
+	width: 1000px;
+	margin: 0px auto;
+	height: 90px;
+}
+#pageTop > #pageTopWrap > #pageTopLogo {
+	float: left;
+	height: 90px;
+	width: 108px;
+}
+#pageTop > #pageTopWrap > #pageTopRest {
+	float: left;
+	height: 90px;
+	width: 892px;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu1 {
+	height: 44px;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu1 > div {
+	margin-top: 8px;
+	padding: 4px;
+	text-align:right;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu1 > div > a {
+	color: #CCC;
+	text-decoration: none;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu1 > div > a:hover {
+	color: #C0E73D;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu2 {
+	height: 44px;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu2 > div {
+	margin-top: 2px;
+	padding: 4px;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu2 > div > a {
+	display: block;
+	float: left;
+	color:#CCC;
+	text-decoration: none;
+	margin: 0px 16px;
+}
+#pageTop > #pageTopWrap > #pageTopRest > #menu2 > div > a:hover {
+	color: #C0E73D;
+}
+/* PAGE MIDDLE */
+#pageMiddle{
+	width: 1000px;
+	margin: 0px auto;
+	height: 900px;
+}
+/* PAGE BOTTOM */
+#pageBottom{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	background: #666;
+	padding: 28px;
+	font-size: 12px;
+	color: #CCC;
+	text-align: center;
+}
