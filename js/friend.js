@@ -48,39 +48,39 @@ $.ajax({
 	success: function(r){
 		r = JSON.parse(r);
 		console.log(r)
-		// let id = fr_id;
-  //   r.forEach(function(item){
-  //     let k= item.likes.some(a=>a.id==id)
-  //     let comment = ''
-  //     item.comment.forEach(function(i){
-  //       comment+=`<div>
-  //           <img src="${i.photo}" width=50 height=50/>${i.name +' '+ i.surname}<br>${i.comment}
-  //       </div>`
-  //     })
+		let id = fr_id;
+    r.forEach(function(item){
+      let k= item.likes.some(a=>a.id==id)
+      let comment = ''
+      item.comment.forEach(function(i){
+        comment+=`<div>
+            <img src="${i.photo}" width=50 height=50/>${i.name +' '+ i.surname}<br>${i.comment}
+        </div>`
+      })
 
-  //      let likes = ''
-  //       item.likes.forEach(function(i){
-  //       likes+=`<div class="like_user">
-  //           <img src="${i.photo}" width=50 height=50/>${i.name +' '+ i.surname}
-  //       </div>`
-  //     })
-  //     let s = $(`<div class ='status_item'>
-  //         <div>
-  //           <img src=" ${item.photo}" width=50  height=50 style='border-radius:50%'/> ${item.name} ${item.surname}
-  //         </div>
-  //         ${item.status} <br />
-  //         <b class='likeCount'>${item.likes.length}</b>
-  //         <img src="images/${(k)?'dislike':'like'}.png" class='${(k)?'dislike':'like'}' width= '40' id = "${item.id}">
-  //          <div class='like_users'>${likes}</div>
-  //         <div class='comment'>
-  //           <textarea class='comment_mess' ></textarea>
-  //           <button class='add_comm' id='${item.id}'>Add</button>
-  //           <button id="showComm">Show comments</button>
-  //           <div class='comment_div'>${comment}</div>
-  //         </div>
-  //       </div>`);
-  //     $("#menu2").append(s);
-  //   });
+       let likes = ''
+        item.likes.forEach(function(i){
+        likes+=`<div class="like_user">
+            <img src="${i.photo}" width=50 height=50/>${i.name +' '+ i.surname}
+        </div>`
+      })
+      let s = $(`<div class ='status_item'>
+          <div>
+            <img src=" ${item.photo}" width=50  height=50 style='border-radius:50%'/> ${item.name} ${item.surname}
+          </div>
+          ${item.status} <br />
+          <b class='likeCount'>${item.likes.length}</b>
+          <img src="images/${(k)?'dislike':'like'}.png" class='${(k)?'dislike':'like'}' width= '40' id = "${item.id}">
+           <div class='like_users'>${likes}</div>
+          <div class='comment'>
+            <textarea class='comment_mess' ></textarea>
+            <button class='add_comm' id='${item.id}'>Add</button>
+            <button id="showComm">Show comments</button>
+            <div class='comment_div'>${comment}</div>
+          </div>
+        </div>`);
+      $("#menu2").append(s);
+    });
   }
 	})
 
@@ -102,7 +102,7 @@ $.ajax({
 		r.forEach( function(item) {
         let n = $(`<div class="frFrends" id="${item.id}">
           <img src="${item['photo']}" width = "100" height = "100" style = 'border-radius:12px'>
-         <a href="friend.php?id=${item.id}"> ${item['name']} ${item['surname']}</a>
+         <a href="friend.php" id="${item.id}"> ${item['name']} ${item['surname']}</a>
           </div>`);
         $("#menu3").append(n);
       });

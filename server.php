@@ -3,7 +3,7 @@ class Ajax{
 	private  $db;
 	function __construct(){
 		session_start();
-		$this->db = new mysqli("localhost", "root", "", "db");
+		$this->db = new mysqli("localhost", "root", "", "db2");
 		if (isset($_POST["action"])){
 			$action = $_POST['action'];
 			call_user_func([$this,$action]);
@@ -269,13 +269,24 @@ class Ajax{
 	function showFrStatus(){
 		$friend_id = $_POST['fr_id'];
 		$data = $this->db->query("SELECT status.*,user.name,user.surname,user.photo  from status join user on user.id = status.my_id where my_id = $friend_id  order by time desc")->fetch_all(true);
-		print json_encode($data);	
+		$arr = [];
+		foreach ($data as $key ) {
+			$post_id=$key['id'];
+			$key['likes'] = $this->db->query("SELECT user.* from `like`
+				join user on user.id = `like`.my_id
+				WHERE post_id = $post_id")->fetch_all(true);
+			$key['comment'] = $this->db->query("SELECT user.*,comment.comment from `comment`
+				join user on user.id = `comment`.my_id
+				WHERE post_id = $post_id")->fetch_all(true);
+			$arr[]=$key;
+		}
+		print json_encode($arr);
 	}
 
 	function showFrFrends(){
 		$friend_id = $_POST['fr_id'];
-		$data = $this->db->query("SELECT friend_id.*,user.name,user.surname,user.photo FROM friends 
-								join user on user.id = friends.my_id where my_id = $friend_id")->fetch_all(true);
+		$data = $this->db->query("SELECT friends.*,user.name,user.surname,user.photo FROM friends 
+								join user on user.id = friends.my_id where friends.my_id = $friend_id")->fetch_all(true);
 		print json_encode($data);
 	}
 

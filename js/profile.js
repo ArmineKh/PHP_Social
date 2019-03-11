@@ -358,9 +358,10 @@ $.ajax({
   type: "POST",
   data: {action: 'addComment', post_id: post_id, comment: comment},
   success: function(r){
-    $(".comment_div").fadeIn();
+
+     t.parent().find(".comment_div").fadeIn();
     t.prev().val("");
-    $(".comment_div").html(comment);
+    $(".comment_div").append(comment);
   }
 })
 });
@@ -372,23 +373,16 @@ $.ajax({
 $(document).on("click", ".dislike", function(){
   $(this).attr("src","images/like.png").removeClass('dislike').addClass('like');
 });
+
 $(document).on("click", ".likeCount", function(){
-  $(".like_user").fadeIn();
+  let t = $(this);
+  t.parent().find(".like_user").fadeIn();
 });
+
 $(document).on("click", "#showComm", function(){
-  $(".comment_div").slideToggle();
+  let t = $(this);
+  t.parent().find(".comment_div").slideToggle();
 });
 
-/*****************  add like and dislike **************************/
+/***************** End add like and dislike **************************/
 
-// $(document).on("click",".friend", function(){
-//   let friend_id = $(this).attr('id');
-//   $.ajax({
-//     url: "server.php",
-//     type: "POST",
-//     data: {action: "showFriend", friend_id: friend},
-//     success: function(r){
-//       location.href = "friend.php"
-//     }
-//   })
-// })
