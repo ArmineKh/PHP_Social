@@ -14,8 +14,8 @@
     height: 100px;
     margin: 5px 0;
 }
-.message{
-    z-index: 115;
+.messDiv{
+    z-index: 150;
 }
 #i{
     padding: 10px;
@@ -125,6 +125,8 @@
 	 border-radius: 12px;
     border: 2px outset;
     padding: 10px;
+    height: 900px;
+    overflow: auto;
 }
 .status_item{
 	border-radius: 12px;

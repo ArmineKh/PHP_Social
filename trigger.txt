@@ -1,0 +1,12 @@
+DROP TRIGGER IF EXISTS chackfriend;
+CREATE TRIGGER chackfriend 
+AFTER INSERT ON message 
+FOR EACH ROW
+BEGIN
+DECLARE c int(11);
+SET c=(SELECT COUNT(*) FROM friends WHERE (friend_id=new.my_id AND my_id=new.friend_id)
+	or (my_id=new.my_id and friend_id=new.friend_id));
+if c=0 THEN 
+DELETE FROM message WHERE my_id=new.my_id AND friend_id=new.friend_id;
+end if;
+END

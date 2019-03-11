@@ -200,7 +200,7 @@ class Ajax{
 	function sendMessage(){
 		$friend_id =  $_POST['friend_id'];
 		$my_id = $_SESSION['user']['id'];
-		$message = $_POST['message'];
+		$message =  mysqli_real_escape_string($this->db, $_POST['message']);;
 		$this->db->query("INSERT INTO message(my_id, friend_id, message) VALUES($my_id, $friend_id, '$message')");
 	}
 
@@ -252,7 +252,7 @@ class Ajax{
 	}
 
 	function showFriend(){
-		$friend_id = $_POST['fr_id'];
+		$friend_id = intval($_POST['fr_id']);
 		$data = $this->db->query("SELECT * FROM user 
 			WHERE id = $friend_id")->fetch_all(true);
 		print json_encode($data);
