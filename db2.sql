@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 100121
+Source Server         : MyConnection
+Source Server Version : 100137
 Source Host           : localhost:3306
-Source Database       : db2
+Source Database       : db
 
 Target Server Type    : MYSQL
-Target Server Version : 100121
+Target Server Version : 100137
 File Encoding         : 65001
 
-Date: 2019-03-08 18:21:21
+Date: 2019-03-12 22:43:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,13 +28,14 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`id`),
   KEY `my_id` (`my_id`),
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
 INSERT INTO `comment` VALUES ('1', '4', '6', 'zhx', '2019-03-04 18:27:32');
 INSERT INTO `comment` VALUES ('2', '4', '6', 'sxfh', '2019-03-04 18:27:34');
+INSERT INTO `comment` VALUES ('3', '4', '1', 'ohy[h0[', '2019-03-12 22:42:21');
 
 -- ----------------------------
 -- Table structure for friends
@@ -49,7 +50,7 @@ CREATE TABLE `friends` (
   KEY `friend_id` (`friend_id`),
   CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`my_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of friends
@@ -58,6 +59,7 @@ INSERT INTO `friends` VALUES ('1', '4', '5');
 INSERT INTO `friends` VALUES ('2', '4', '6');
 INSERT INTO `friends` VALUES ('3', '7', '4');
 INSERT INTO `friends` VALUES ('4', '4', '8');
+INSERT INTO `friends` VALUES ('5', '5', '4');
 
 -- ----------------------------
 -- Table structure for like
@@ -212,11 +214,11 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('3', 'Aren', 'Achoyan', '12', 'narek1990099@gmail.com', '$2y$10$cyPGhCiTYHOUCMSsvd91guQn.xU1rExOgLyh/EqaeMx7nReboLOmy', 'images/1550669518Koala.jpg');
-INSERT INTO `user` VALUES ('4', 'Alen', 'Achoyan', '2055', 'a@mail.ru', '$2y$10$dhFydWYY66ru/dI2vYP6be76bwq6ZofIiwquba4XAIfG9wh89irhC', 'images/1551105193Hydrangeas.jpg');
-INSERT INTO `user` VALUES ('5', 'Armine', 'Achoyan', '20', 'a@mail.ru', '$2y$10$mJFQfnGRF8xR4ukFcK3.aOQiq2SV5D0E.Eupg8XqfQhShwO.SlZsi', 'images/1550669518Koala.jpg');
-INSERT INTO `user` VALUES ('6', 'Aren', 'Achoyan', '20', 'a@mail.ru', '$2y$10$d1W23VNePmMrNCFhwGv9euUyxv2LWVuJ6hkdwn474X07J9GIXZ/x.', 'images/1550669518Koala.jpg');
-INSERT INTO `user` VALUES ('7', 'asd', 'Achoyan', '18', 'a@mail.ru', '$2y$10$QKpNmPVmUdZzMELc7oewQeXoFgl2BmXyL6F394wGVSTGu.7n2gbmu', '');
-INSERT INTO `user` VALUES ('8', 'Ashot', 'Achoyan', '12', 'narek1990099@gmail.com', '$2y$10$poWtMgZyUGpt65ywbbo0TuATwyCScuX3o0zUdyxuk.2qBboIZWWGe', '');
-INSERT INTO `user` VALUES ('9', 'Alla', 'Achoyan', '20', 'narek1990099@gmail.com', '$2y$10$6yz4xIRwCHP0cH8gRYiiJOSDD0IVierxz5WQxWXCzVZ8nmnPCJ25W', '');
+INSERT INTO `user` VALUES ('3', 'Ani', 'Achoyan', '12', 'narek1990099@gmail.com', '$2y$10$cyPGhCiTYHOUCMSsvd91guQn.xU1rExOgLyh/EqaeMx7nReboLOmy', 'images/1550669518Koala.jpg');
+INSERT INTO `user` VALUES ('4', 'Anna', 'Grigoryan', '25', 'a@mail.ru', '$2y$10$dhFydWYY66ru/dI2vYP6be76bwq6ZofIiwquba4XAIfG9wh89irhC', 'images/1550669518Koala.jpg');
+INSERT INTO `user` VALUES ('5', 'Armine', 'Manukyan', '20', 'a@mail.ru', '$2y$10$mJFQfnGRF8xR4ukFcK3.aOQiq2SV5D0E.Eupg8XqfQhShwO.SlZsi', 'images/1550900964Hydrangeas.jpg');
+INSERT INTO `user` VALUES ('6', 'Aren', 'Margaryan', '20', 'a@mail.ru', '$2y$10$d1W23VNePmMrNCFhwGv9euUyxv2LWVuJ6hkdwn474X07J9GIXZ/x.', 'images/1550668480Lighthouse.jpg');
+INSERT INTO `user` VALUES ('7', 'Karen', 'Vardanyan', '40', 'a@mail.ru', '$2y$10$QKpNmPVmUdZzMELc7oewQeXoFgl2BmXyL6F394wGVSTGu.7n2gbmu', 'images/1550668320Jellyfish.jpg');
+INSERT INTO `user` VALUES ('8', 'Ashot', 'Avagyan', '35', 'narek1990099@gmail.com', '$2y$10$poWtMgZyUGpt65ywbbo0TuATwyCScuX3o0zUdyxuk.2qBboIZWWGe', 'images/1550668253Penguins.jpg');
+INSERT INTO `user` VALUES ('9', 'Alla', 'Hovhannisyan', '20', 'narek1990099@gmail.com', '$2y$10$6yz4xIRwCHP0cH8gRYiiJOSDD0IVierxz5WQxWXCzVZ8nmnPCJ25W', 'images/1550668521Jellyfish.jpg');
 SET FOREIGN_KEY_CHECKS=1;
