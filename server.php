@@ -1,13 +1,13 @@
 <?php 
-class Ajax{
+class Ajax{ 
 	private  $db;
 	function __construct(){
-		session_start();
-		$this->db = new mysqli("localhost", "root", "", "db2");
+		session_start(); 
+		$this->db = new mysqli("localhost", "root", "", "db");
 		if (isset($_POST["action"])){
 			$action = $_POST['action'];
 			call_user_func([$this,$action]);
-		}
+		} 
 			if (isset($_POST["logInbtn"])){
 				print 25;
 				$this->logIn();
@@ -100,7 +100,7 @@ class Ajax{
 			WHERE id = '$id'")->fetch_all(true);
 		$_SESSION["user"] = $data[0];
 		header("location:profile.php");
-
+ 
 	}
 
 	function imageUploude(){
@@ -115,7 +115,7 @@ class Ajax{
 		move_uploaded_file($tmp, $address);
 
 		$_SESSION['user']['photo'] = $address;
-		header('location:profile.php');
+		header('location:profile.php'); 
 	}
 
 	function search(){

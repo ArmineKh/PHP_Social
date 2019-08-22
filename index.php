@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
 	<meta charset="UTF-8">
 	<title>Social Network</title>
@@ -27,7 +27,7 @@
 		Password Confirm:   <input type="password"  id="cPassword" class="form-control">
 		<button id="save" class="btn btn-info">Save</button>
 
-	</div>
+	</div> 
 
 <?php include_once("template_pageBottom.php"); ?>
 </body>

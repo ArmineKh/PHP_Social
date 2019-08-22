@@ -3,7 +3,7 @@ $(document).on("input", "#search", function(){
   let search = $("#search").val();
   $("#search_result").empty()
   if (search) {
-
+ 
     $.ajax({
       url: 'server.php',
       type: 'POST',
@@ -55,7 +55,7 @@ $(document).on('click','.add', function(){
 
 
 /***************** SHOW REQUEST **************************/
-
+  
 function getRequest(){
   $.ajax({
     url: 'server.php',

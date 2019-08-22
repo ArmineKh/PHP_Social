@@ -52,7 +52,7 @@ if (!isset($_SESSION['user'])){
       	<img src="images/notific.png" alt="" class="notific_icon">
       	<div id="request_result" class="mx-auto p-3 bg-dark text-light"></div>
       </li>
-      <li class="nav-item  mr-2"style="position: relative;">
+      <li class="nav-item  mr-2" style="position: relative;">
 			<input type="text" id="search" class="form-control" placeholder="Search">
 			<div id="search_result" class=" bg-dark text-light" style="position: absolute;"></div>
       </li>
@@ -91,7 +91,7 @@ if (!isset($_SESSION['user'])){
 	<div class="statusDiv col-7 pt-4">
 		<div class="typeStatus">
 			<textarea class="addStatus" type = "text" placeholder="type status...."></textarea>
-			<img src="images/post.png" class="post">
+			<img src="images/post.png" class="post"> 
 		</div>
 		<div class="showStatus"></div>
 	</div>
